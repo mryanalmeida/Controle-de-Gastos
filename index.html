@@ -22,14 +22,14 @@
         <div id="descricaoOutros">
             <input type="text" id="descricaoOutrosInput" placeholder="Descrição do gasto">
         </div>
-        <input type="number" id="valorFixo" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGastoFixo()">
+        <input type="number" id="valorFixo" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGastoFixo()" oninput="this.value = this.value.replace(/[^0-9.]/g, '')">
         <button onclick="adicionarGastoFixo()">Adicionar</button>
         <ul id="listaGastosFixos"></ul>
         <h3>Total Fixos: R$ <span id="totalFixos">0.00</span></h3>
         
         <h3>Gastos Durante o Mês</h3>
         <input type="text" id="descricao" placeholder="Descrição">
-        <input type="number" id="valor" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGasto()">
+        <input type="number" id="valor" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGasto()" oninput="this.value = this.value.replace(/[^0-9.]/g, '')">
         <button onclick="adicionarGasto()">Adicionar</button>
         <ul id="listaGastos"></ul>
         <h3>Total Variável: R$ <span id="total">0.00</span></h3>
@@ -87,35 +87,6 @@
             botao.parentElement.remove();
             total -= valor;
             document.getElementById("total").textContent = total.toFixed(2);
-            atualizarTotalGeral();
-            salvarDados();
-        }
-
-        function adicionarGastoFixo() {
-            let descricao = document.getElementById("descricaoFixo").value;
-            if (descricao === "Outros") {
-                descricao = document.getElementById("descricaoOutrosInput").value;
-            }
-            let valor = parseFloat(document.getElementById("valorFixo").value);
-            if (descricao && !isNaN(valor)) {
-                let lista = document.getElementById("listaGastosFixos");
-                let item = document.createElement("li");
-                item.innerHTML = `${descricao} - R$ ${valor.toFixed(2)} <button onclick='removerGastoFixo(this, ${valor})'>X</button>`;
-                lista.appendChild(item);
-                totalFixos += valor;
-                document.getElementById("totalFixos").textContent = totalFixos.toFixed(2);
-                document.getElementById("descricaoFixo").value = "";
-                document.getElementById("valorFixo").value = "";
-                document.getElementById("descricaoOutrosInput").value = "";
-                atualizarTotalGeral();
-                salvarDados();
-            }
-        }
-
-        function removerGastoFixo(botao, valor) {
-            botao.parentElement.remove();
-            totalFixos -= valor;
-            document.getElementById("totalFixos").textContent = totalFixos.toFixed(2);
             atualizarTotalGeral();
             salvarDados();
         }
