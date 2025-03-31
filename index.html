@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Gastos Mensais</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilo_gastos.css">
 </head>
 <body>
     <div class="container">
         <h2>Controle de Gastos Mensais</h2>
-
-        <!-- Gastos Fixos -->
+        
         <h3>Gastos Fixos</h3>
         <select id="descricaoFixo" onchange="mostrarDescricaoOutros()">
             <option value="Aluguel">Aluguel</option>
@@ -27,20 +26,118 @@
         <button onclick="adicionarGastoFixo()">Adicionar</button>
         <ul id="listaGastosFixos"></ul>
         <h3>Total Fixos: R$ <span id="totalFixos">0.00</span></h3>
-
-        <!-- Gastos Durante o Mês -->
+        
         <h3>Gastos Durante o Mês</h3>
         <input type="text" id="descricao" placeholder="Descrição">
         <input type="number" id="valor" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGasto()">
         <button onclick="adicionarGasto()">Adicionar</button>
         <ul id="listaGastos"></ul>
         <h3>Total Variável: R$ <span id="total">0.00</span></h3>
-
+        
         <h3>Total Geral: R$ <span id="totalGeral">0.00</span></h3>
-
+        
         <button onclick="limparDados()">Limpar Dados do Mês</button>
     </div>
 
-    <script src="scri\pts.js"></script>
+    <script>
+        let total = 0;
+        let totalFixos = 0;
+        
+        function atualizarTotalGeral() {
+            let totalGeral = total + totalFixos;
+            document.getElementById("totalGeral").textContent = totalGeral.toFixed(2);
+        }
+        
+        function salvarDados() {
+            localStorage.setItem("gastos", JSON.stringify({ total, totalFixos, listaGastos: document.getElementById("listaGastos").innerHTML, listaGastosFixos: document.getElementById("listaGastosFixos").innerHTML }));
+        }
+        
+        function carregarDados() {
+            let dados = JSON.parse(localStorage.getItem("gastos"));
+            if (dados) {
+                total = dados.total;
+                totalFixos = dados.totalFixos;
+                document.getElementById("listaGastos").innerHTML = dados.listaGastos;
+                document.getElementById("listaGastosFixos").innerHTML = dados.listaGastosFixos;
+                document.getElementById("total").textContent = total.toFixed(2);
+                document.getElementById("totalFixos").textContent = totalFixos.toFixed(2);
+                atualizarTotalGeral();
+            }
+        }
+
+        function adicionarGasto() {
+            let descricao = document.getElementById("descricao").value;
+            let valor = parseFloat(document.getElementById("valor").value);
+            let data = new Date().toLocaleDateString("pt-BR");
+            if (descricao && !isNaN(valor)) {
+                let lista = document.getElementById("listaGastos");
+                let item = document.createElement("li");
+                item.innerHTML = `${descricao} - R$ ${valor.toFixed(2)} (${data}) <button onclick='removerGasto(this, ${valor})'>X</button>`;
+                lista.appendChild(item);
+                total += valor;
+                document.getElementById("total").textContent = total.toFixed(2);
+                document.getElementById("descricao").value = "";
+                document.getElementById("valor").value = "";
+                atualizarTotalGeral();
+                salvarDados();
+            }
+        }
+        
+        function removerGasto(botao, valor) {
+            botao.parentElement.remove();
+            total -= valor;
+            document.getElementById("total").textContent = total.toFixed(2);
+            atualizarTotalGeral();
+            salvarDados();
+        }
+
+        function adicionarGastoFixo() {
+            let descricao = document.getElementById("descricaoFixo").value;
+            if (descricao === "Outros") {
+                descricao = document.getElementById("descricaoOutrosInput").value;
+            }
+            let valor = parseFloat(document.getElementById("valorFixo").value);
+            if (descricao && !isNaN(valor)) {
+                let lista = document.getElementById("listaGastosFixos");
+                let item = document.createElement("li");
+                item.innerHTML = `${descricao} - R$ ${valor.toFixed(2)} <button onclick='removerGastoFixo(this, ${valor})'>X</button>`;
+                lista.appendChild(item);
+                totalFixos += valor;
+                document.getElementById("totalFixos").textContent = totalFixos.toFixed(2);
+                document.getElementById("descricaoFixo").value = "";
+                document.getElementById("valorFixo").value = "";
+                document.getElementById("descricaoOutrosInput").value = "";
+                atualizarTotalGeral();
+                salvarDados();
+            }
+        }
+
+        function removerGastoFixo(botao, valor) {
+            botao.parentElement.remove();
+            totalFixos -= valor;
+            document.getElementById("totalFixos").textContent = totalFixos.toFixed(2);
+            atualizarTotalGeral();
+            salvarDados();
+        }
+
+        function limparDados() {
+            localStorage.removeItem("gastos");
+            document.getElementById("listaGastos").innerHTML = "";
+            document.getElementById("listaGastosFixos").innerHTML = "";
+            total = 0;
+            totalFixos = 0;
+            document.getElementById("total").textContent = "0.00";
+            document.getElementById("totalFixos").textContent = "0.00";
+            atualizarTotalGeral();
+        }
+
+        function mostrarDescricaoOutros() {
+            const descricaoFixo = document.getElementById("descricaoFixo").value;
+            const descricaoOutros = document.getElementById("descricaoOutros");
+            descricaoOutros.style.display = descricaoFixo === "Outros" ? "block" : "none";
+        }
+
+        carregarDados();
+    </script>
 </body>
 </html>
