@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Gastos Mensais</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Controle de Gastos Mensais</h2>
+
+        <!-- Gastos Fixos -->
+        <h3>Gastos Fixos</h3>
+        <select id="descricaoFixo" onchange="mostrarDescricaoOutros()">
+            <option value="Aluguel">Aluguel</option>
+            <option value="Internet">Internet</option>
+            <option value="Energia">Energia</option>
+            <option value="Água">Água</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Outros">Outros</option>
+        </select>
+        <div id="descricaoOutros">
+            <input type="text" id="descricaoOutrosInput" placeholder="Descrição do gasto">
+        </div>
+        <input type="number" id="valorFixo" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGastoFixo()">
+        <button onclick="adicionarGastoFixo()">Adicionar</button>
+        <ul id="listaGastosFixos"></ul>
+        <h3>Total Fixos: R$ <span id="totalFixos">0.00</span></h3>
+
+        <!-- Gastos Durante o Mês -->
+        <h3>Gastos Durante o Mês</h3>
+        <input type="text" id="descricao" placeholder="Descrição">
+        <input type="number" id="valor" placeholder="Valor (R$)" onkeypress="if(event.key === 'Enter') adicionarGasto()">
+        <button onclick="adicionarGasto()">Adicionar</button>
+        <ul id="listaGastos"></ul>
+        <h3>Total Variável: R$ <span id="total">0.00</span></h3>
+
+        <h3>Total Geral: R$ <span id="totalGeral">0.00</span></h3>
+
+        <button onclick="limparDados()">Limpar Dados do Mês</button>
+    </div>
+
+    <script src="scri\pts.js"></script>
+</body>
+</html>
