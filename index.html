@@ -7,11 +7,16 @@
     <title>Controle de Gastos Mensais</title>
     <link rel="stylesheet" href="estilo_gastos.css">
     <script defer src="script_gastos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
 </head>
 
 <body>
     <div class="container">
         <h2>Controle de Gastos Mensais</h2>
+
+        <!-- Data Atual -->
+        <h3 id="dataAtual"></h3> <!-- Aqui será exibida a data atual -->
 
         <h3>Gastos Fixos</h3>
         <select id="descricaoFixo" onchange="mostrarDescricaoOutros()">
@@ -42,6 +47,9 @@
         <h3>Total Geral: R$ <span id="totalGeral">0.00</span></h3>
 
         <button onclick="limparDados()">Limpar Dados do Mês</button>
+
+        <!-- Botões para gerar relatórios -->
+        <button onclick="gerarRelatorioHTML()">Gerar Relatório HTML</button>
     </div>
 </body>
 
