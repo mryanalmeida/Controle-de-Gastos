@@ -7,8 +7,8 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #f8f9fa; /* Cor de fundo mais suave */
+    color: #495057; /* Cor de texto neutra */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,9 +17,9 @@ body {
 }
 
 .container {
-    background: #fff;
+    background: #ffffff; /* Branco puro para maior clareza */
     border-radius: 12px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
     width: 100%;
     max-width: 480px;
     padding: 30px;
@@ -28,14 +28,14 @@ body {
 
 /* Títulos */
 h2 {
-    color: #0056b3;
+    color: #343a40; /* Cor de título neutra e elegante */
     font-size: 24px;
     text-align: center;
     margin-bottom: 20px;
 }
 
 h3 {
-    color: #333;
+    color: #495057; /* Cor de subtítulo mais suave */
     font-size: 18px;
     margin-bottom: 10px;
 }
@@ -45,14 +45,14 @@ input, select {
     width: 100%;
     padding: 12px 16px;
     margin: 8px 0;
-    border: 1px solid #ddd;
+    border: 1px solid #ced4da; /* Cor de borda suave */
     border-radius: 8px;
     font-size: 14px;
     transition: border-color 0.3s;
 }
 
 input:focus, select:focus {
-    border-color: #0056b3;
+    border-color: #6c757d; /* Cor de foco suave */
     outline: none;
 }
 
@@ -60,7 +60,7 @@ input:focus, select:focus {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #0056b3;
+    background-color: #6c757d; /* Cor de fundo neutra */
     color: white;
     font-size: 16px;
     border: none;
@@ -71,11 +71,11 @@ button {
 }
 
 button:hover {
-    background-color: #004085;
+    background-color: #5a6268; /* Cor de hover mais suave */
 }
 
 button:disabled {
-    background-color: #ccc;
+    background-color: #e2e6ea;
     cursor: not-allowed;
 }
 
@@ -90,7 +90,7 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: #f8f9fa; /* Cor de fundo mais suave para as listas */
     padding: 10px;
     margin: 8px 0;
     border-radius: 8px;
@@ -100,23 +100,23 @@ li {
 
 /* Botões da lista (X) */
 li button {
-    background-color: #dc3545;
+    background-color: #dc3545; /* Cor de fundo do botão de exclusão */
     color: white;
-    padding: 6px 6px; /* Ajustei o padding para diminuir o tamanho */
-    width: 30px; /* Definindo uma largura fixa para o botão quadrado */
-    height: 30px; /* Garantindo que a altura também seja a mesma */
-    border-radius: 5px; /* Bordas arredondadas, mas mantidas como quadrado */
+    padding: 6px 6px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
     font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: 10px; /* Espaço entre o texto e o botão */
+    margin-left: 10px;
 }
 
 li button:hover {
-    background-color: #c82333;
+    background-color: #c82333; /* Cor de hover mais suave para o botão de exclusão */
 }
 
 /* Elementos ocultos */
@@ -127,7 +127,7 @@ li button:hover {
 /* Estilos do total */
 h3 span {
     font-weight: bold;
-    color: #007bff;
+    color: #28a745; /* Cor de destaque mais clean */
 }
 
 /* Responsividade */
