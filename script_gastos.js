@@ -184,9 +184,125 @@ function gerarRelatorioHTML() {
     novaJanela.document.close();
 }
 
+function gerarRelatorioMovel() {
+    let relatorioHTML = `
+    <html>
+        <head>
+            <title>Relatório de Gastos do Mês</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 10px;
+                    padding: 10px;
+                    font-size: 14px;
+                }
+                h2, h3 {
+                    text-align: center;
+                }
+                .table-container {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 10px 0;
+                }
+                table, th, td {
+                    border: 1px solid #ddd;
+                }
+                th, td {
+                    padding: 5px;
+                    text-align: left;
+                    font-size: 14px;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                .total {
+                    text-align: center;
+                    margin-top: 15px;
+                    font-weight: bold;
+                }
+                @media (max-width: 600px) {
+                    table {
+                        font-size: 12px;
+                    }
+                    th, td {
+                        padding: 8px;
+                    }
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Relatório de Gastos do Mês</h2>
+            <h3>Gastos Fixos:</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    `;
 
-// Chama a função para exibir a data assim que a página for carregada
+    gastosFixos.forEach(gasto => {
+        relatorioHTML += `
+            <tr>
+                <td>${gasto.descricao}</td>
+                <td>${gasto.valor.toFixed(2)}</td>
+            </tr>
+        `;
+    });
+
+    relatorioHTML += `
+        </tbody>
+    </table>
+    <h3 class="total">Total Fixos: R$ ${totalFixos.toFixed(2)}</h3>
+    
+    <h3>Gastos Variáveis:</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Valor (R$)</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    gastosVariaveis.forEach(gasto => {
+        relatorioHTML += `
+            <tr>
+                <td>${gasto.descricao}</td>
+                <td>${gasto.valor.toFixed(2)}</td>
+                <td>${gasto.data}</td>
+            </tr>
+        `;
+    });
+
+    relatorioHTML += `
+        </tbody>
+    </table>
+    <h3 class="total">Total Variável: R$ ${total.toFixed(2)}</h3>
+    <h3 class="total">Total Geral: R$ ${(total + totalFixos).toFixed(2)}</h3>
+    </body>
+    </html>
+    `;
+
+    // Abre uma nova aba com o relatório gerado
+    let novaJanela = window.open();
+    novaJanela.document.write(relatorioHTML);
+    novaJanela.document.close();
+}
+
+// Carregar dados ao iniciar a página
 window.onload = function () {
+    exibirDataAtual();
     carregarDados();
-    exibirDataAtual(); // Exibe a data atual
 };
