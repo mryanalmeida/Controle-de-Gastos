@@ -102,7 +102,7 @@ function mostrarDescricaoOutros() {
 
 function exibirDataAtual() {
     const hoje = new Date();
-    const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+    const opcoes = { day: 'numeric', month: 'long', year: 'numeric' };
     const dataFormatada = hoje.toLocaleDateString('pt-BR', opcoes);
     document.getElementById('dataAtual').textContent = dataFormatada;
 }
